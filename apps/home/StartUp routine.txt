@@ -1,0 +1,12 @@
+StartUp routine:
+    [-]: make service for dashboard server and other important program and make services to run at run time
+
+
+config server:
+    [-]: get congig file from user
+    [-]: save config file in specific directory
+    [-]: send change config command and information to RTU code
+    
+    [-]: user select one config file
+    [-]: api for select checkbox
+    [-]: send change config command and information to RTU code

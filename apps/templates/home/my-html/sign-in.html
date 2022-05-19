@@ -1,0 +1,60 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title style="font-family: Vazir;">ورود</title>
+    <!-- CSS files -->
+    <link href="../static/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="../static/dist/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="../static/dist/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="../static/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <link href="../static/dist/css/demo.min.css" rel="stylesheet"/>
+  </head>
+
+
+  <body  class=" border-top-wide border-primary d-flex flex-column">
+    <div class="page page-center">
+      <div class="container-tight py-4">
+        <div class="text-center mb-4">
+          <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/12.png" height="64" alt=""></a>
+        </div>
+        <form class="card card-md" action="" method="POST" autocomplete="off">
+
+          {{ form.hidden_tag() }}
+
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4" style="font-family:Vazir;direction: rtl;">لطفا اطلاعات کاربری خود را وارد نمائید.</h2>
+            <div class="mb-3">
+              <label class="form-label" style="text-align: end;font-family: Vazir;">نام کاربری</label>
+              {{ form.username(class="form-control") }}
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label" style="text-align: end;font-family: Vazir;">پسورد</label>
+            {{ form.password(class="form-control", type="password") }}
+            </div>
+
+            <div class="mb-2">
+              <label class="form-check">
+                <input type="checkbox" class="form-check-input"/>
+                <span class="form-check-label" style="font-family: Vazir;">مرا به خاطر بسپار</span>
+              </label>
+            </div>
+            
+            <div class="form-footer">
+              <button type="submit" name="login" class="btn btn-primary w-100" style="font-family: Vazir;">ورود</button>
+            </div>
+          </div>
+         
+      </div>
+    </div>
+    <!-- Libs JS -->
+    <!-- Tabler Core -->
+    <script src="../static/dist/js/tabler.min.js" defer></script>
+    <script src="../static/dist/js/demo.min.js" defer></script>
+  </body>
+</html>
+

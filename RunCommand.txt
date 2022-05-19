@@ -1,0 +1,15 @@
+
+
+
+source .venv/bin/activate
+
+
+cd ~/Coding\ Projects/django-tabler
+
+
+python manage.py migrate
+
+
+cd ~/Coding\ Projects/django-tabler
+
+python manage.py runserver

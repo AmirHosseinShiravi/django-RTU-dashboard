@@ -1,0 +1,378 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} dashboard {% endblock title %}
+
+
+{% block content %}
+
+<div class="page-wrapper">
+    <div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+            <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+            </ol>
+        <div class="row g-2 align-items-center">
+        <div class="col">
+            <!-- <h2 class="page-title">
+
+                
+            </h2> -->
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <span class="status-indicator status-green status-indicator-animated">
+                    <span class="status-indicator-circle"></span>
+                    <span class="status-indicator-circle"></span>
+                    <span class="status-indicator-circle"></span>
+                  </span>
+                </div>
+                <div class="col">
+                  <h2 class="page-title">
+                    RTU560 MCU
+                  </h2>
+                  <div class="text-muted">
+                    <ul class="list-inline list-inline-dots mb-0">
+                      <li class="list-inline-item"><span class="text-green">Up</span></li>
+                      <li class="list-inline-item">Checked every 1 Seconds</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="row row-cards">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="subheader">Currently up for</div>
+                      <div class="h4 m-1" id="uptime-div">در حال دریافت اطلاعات ...</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <h3 class="subheader">subheader</h3>
+                        <div class="h4 m-0" >در حال دریافت اطلاعات ...</div>
+                        <div id="chart-uptime-incidents"></div>
+                      </div>
+                    </div>
+                  </div>
+                
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3 class="card-title">Real Time System Statistics</h3>
+                      <div id="chart-cpu-usage"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4" id="storage-status-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row placeholder-glow">
+                          <div class="col-auto">
+                            <div class="avatar avatar-rounded placeholder"></div>
+                          </div>
+                          <div class="col">
+                            <div class="placeholder placeholder-xs col-9"></div>
+                            <div class="placeholder placeholder-xs col-7"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-table table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Time period</th>
+                            <th>Availability</th>
+                            <th>Downtime</th>
+                            <th>Incidents</th>
+                            <th>Longest incident</th>
+                            <th>Avg. incident</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Today</td>
+                            <td>98.9533%</td>
+                            <td>1 minute</td>
+                            <td>1</td>
+                            <td>1 minute</td>
+                            <td>1 minute</td>
+                          </tr>
+                          <tr>
+                            <td>Last 7 days</td>
+                            <td>98.9533%</td>
+                            <td>1 minute</td>
+                            <td>1</td>
+                            <td>1 minute</td>
+                            <td>1 minute</td>
+                          </tr>
+                          <tr>
+                            <td>Last 30 days</td>
+                            <td>98.9533%</td>
+                            <td>1 minute</td>
+                            <td>1</td>
+                            <td>1 minute</td>
+                            <td>1 minute</td>
+                          </tr>
+                          <tr>
+                            <td>Last 365 days</td>
+                            <td>98.9533%</td>
+                            <td>1 minute</td>
+                            <td>1</td>
+                            <td>1 minute</td>
+                            <td>1 minute</td>
+                          </tr>
+                          <tr>
+                            <td>All time</td>
+                            <td>98.9533%</td>
+                            <td>1 minute</td>
+                            <td>1</td>
+                            <td>1 minute</td>
+                            <td>1 minute</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- Content here -->
+            
+   
+   
+    </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+<script src="/static/assets/libs/apexcharts/dist/apexcharts.js" defer=""></script>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    if(window.ApexCharts){
+        console.log('in')
+      	var chart = new ApexCharts(document.getElementById('chart-cpu-usage'), {
+      		chart: {
+      			type: "area",
+      			fontFamily: 'inherit',
+      			height: 240,
+      			parentHeightOffset: 0,
+                zoom: {
+                type: 'x',
+                enabled: true,
+                autoScaleYaxis: true
+                },
+      			toolbar: {
+      				show: false,
+      			},
+      			animations: {
+      				enabled: true,
+                      easing: 'easeinout',
+            dynamicAnimation: {
+              speed: 1000
+            }
+      			},
+      		},
+      		dataLabels: {
+      			enabled: false,
+      		},
+            noData: {
+                text: 'Loading...'
+            },
+            plotoptions: {
+              
+      		fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    inverseColors: false,
+                    opacityFrom: 0.5,
+                    opacityTo: 0,
+                    stops: [0, 90, 100]
+                },
+      		},
+            colors:[
+                '#7367F0',
+                '#28C76F'
+            ]
+        },
+
+      		stroke: {
+      			width: 2,
+      			lineCap: "round",
+      			curve: "smooth",
+      		},
+      		series:  [],
+      		grid: {
+      			padding: {
+      				top: -20,
+      				right: 0,
+      				left: -4,
+      				bottom: -4
+      			},
+      			strokeDashArray: 4,
+      		},
+      		xaxis: {
+      			labels: {
+      				padding: 0,
+      			},
+      			tooltip: {
+      				enabled: false
+      			},
+      			axisBorder: {
+      				show: false,
+      			},
+      			type: 'datetime'
+      		},
+      		yaxis: [
+              {
+                seriesName: 'RAM Usage',
+                opposite: true,
+                axisTicks: {
+                show: true,
+                },
+                labels: {
+              style: {
+                
+                padding: 4
+                }
+                },
+                title: {
+                text: "RAM Usage (Percentage)",
+                style: {
+                    color: '#206bc4',
+                }
+                },
+            },
+            {
+                seriesName: 'CPU Usage',
+                opposite: false,
+                axisTicks: {
+                show: true,
+                },
+                labels: {
+              style: {
+                padding: 4
+                }
+                },
+                title: {
+                    text: "CPU Usage (Percentage)",
+                    style: {
+                        color: '#eb3471',
+                    }
+                },
+            }
+      		
+        ],
+               
+      		
+            //   tooltip: {
+            //     x: {
+            //         format: 'dd/MM/yy HH:mm'
+            //     },
+            // },
+      		// labels: [
+      		// 	'2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19', '2020-07-20', '2020-07-21', '2020-07-22', '2020-07-23', '2020-07-24', '2020-07-25', '2020-07-26', '2020-07-27', '2020-07-28', '2020-07-29', '2020-07-30', '2020-07-31', '2020-08-01', '2020-08-02', '2020-08-03', '2020-08-04', '2020-08-05', '2020-08-06', '2020-08-07', '2020-08-08', '2020-08-09', '2020-08-10', '2020-08-11', '2020-08-12', '2020-08-13', '2020-08-14', '2020-08-15', '2020-08-16', '2020-08-17', '2020-08-18', '2020-08-19', '2020-08-20', '2020-08-21', '2020-08-22', '2020-08-23', '2020-08-24', '2020-08-25', '2020-08-26', '2020-08-27', '2020-08-28', '2020-08-29', '2020-08-30', '2020-08-31', '2020-09-01', '2020-09-02', '2020-09-03', '2020-09-04', '2020-09-05', '2020-09-06', '2020-09-07', '2020-09-08', '2020-09-09', '2020-09-10', '2020-09-11', '2020-09-12', '2020-09-13', '2020-09-14', '2020-09-15', '2020-09-16', '2020-09-17', '2020-09-18', '2020-09-19', '2020-09-20', '2020-09-21', '2020-09-22', '2020-09-23', '2020-09-24', '2020-09-25', '2020-09-26', '2020-09-27', '2020-09-28', '2020-09-29', '2020-09-30', '2020-10-01', '2020-10-02', '2020-10-03', '2020-10-04', '2020-10-05', '2020-10-06', '2020-10-07', '2020-10-08', '2020-10-09', '2020-10-10', '2020-10-11', '2020-10-12', '2020-10-13', '2020-10-14', '2020-10-15', '2020-10-16', '2020-10-17'
+      		// ],
+      		colors: ["#206bc4", "#eb3471"],
+      		legend: {
+      			show: false,
+      		},
+      	});
+          chart.render();
+
+
+    var url = '{% url "get_system_status" %}';
+    var cpu_data = [];
+    var ram_data = [];
+
+    function get_cpu_usage_data() {
+
+            fetch(url, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
+                }
+            })
+                .then(response => {
+                    return response.json() //Convert response to JSON
+                })
+                .then(data => {
+
+                    cpu_data.push({ "x": data['datetime'], "y": data['cpu_usage'] });
+                    ram_data.push({ "x": data['datetime'], "y": data['ram_usage'] });
+                    $('#uptime-div').html(data['uptime']);
+                    $('#storage-status-card').html(`<div class="card">
+                                                        <div class="card-body">
+                                                            <p class="mb-3" id="used-storage-p"></p>
+                                                            <div class="progress progress-separated mb-3">
+                                                                <div class="progress-bar bg-primary" role="progressbar" style="width:` + data['disk_used_percent'] + `%" aria-label="Used"></div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-auto d-flex align-items-center pe-2">
+                                                                <span class="legend me-2 bg-primary"></span>
+                                                                <span>Used</span>
+                                                                <span class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted" id="used-storage"></span>
+                                                                </div>
+                                                                <div class="col-auto d-flex align-items-center ps-2">
+                                                                <span class="legend me-2"></span>
+                                                                <span>Free</span>
+                                                                <span class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted" id="free-storage"></span>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>`);
+                    $('#used-storage').html(data['disk_used'] + ' GB');
+                    $('#free-storage').html(data['disk_free'] + ' GB');
+                    $('#used-storage-p').html('Using Storage <strong>' + data['disk_used'] + ' GB' + ' </strong>of ' + data['disk_total'] + ' GB');
+
+                    console.log(data);
+                    chart.updateSeries([{
+                        name: 'RAM Usage',
+                        data: ram_data,
+                    },
+                    {
+                        name: 'CPU Usage',
+                        data: cpu_data
+                    }
+                    ]);
+
+                });
+
+
+        }
+
+    setInterval(get_cpu_usage_data, 1000);
+    }
+    });
+      // @formatter:on
+    </script>
+ 
+
+ <script>
+document.addEventListener("DOMContentLoaded", function () {
+    
+});
+    </script>
+
+{% endblock javascripts %}
+    
+    

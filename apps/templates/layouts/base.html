@@ -1,0 +1,93 @@
+{% load static %}
+
+<!doctype html>
+<!--
+* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* @version 1.0.0-beta10
+* @link https://tabler.io
+* Copyright 2018-2022 The Tabler Authors
+* Copyright 2018-2022 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Empty page - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
+    <!-- CSS files -->
+    <link href="/static/assets/css/tabler.css" rel="stylesheet"/>
+    <link href="/static/assets/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="/static/assets/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="/static/assets/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <link href="/static/assets/css/demo.min.css" rel="stylesheet"/>
+    <!-- Libs JS -->
+    <!-- Tabler Core -->
+    <script src="/static/assets/js/tabler.min.js" defer></script>
+    <script src="/static/assets/js/demo.min.js" defer></script>
+    <!-- Add persian-date library -->
+    <script src="/static/assets/libs/persian-date/dist/persian-date.js" defer></script>
+    <!-- JS code to retrive date and time data -->
+    <script src="/static/assets/js/custom/site-persian-date.js" defer></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/static/assets/plugins/DataTables/datatables.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/assets/plugins/DataTables/DataTables-1.12.0/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="/static/assets/plugins/DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/DataTables/jQuery-3.6.0/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/DataTables/DataTables-1.12.0/js/jquery.dataTables.js"></script>
+    
+    
+    <link rel="stylesheet" type="text/css" href="/static/assets/libs/apexcharts/dist/apexcharts.css">
+
+  </head>
+  <body> 
+  <!-- <body class=" layout-fluid"> -->
+    <div class="page">
+
+    <!-- Other Files -->
+    {% include 'includes/top-bar.html' %}
+
+    {% include 'includes/top-menu.html' %}
+
+    {% block content %}{% endblock content %}
+    
+    {% include 'includes/footer.html' %}
+    
+    </div>
+    </div>
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- <script>
+async function postData(url = '', data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    }
+
+    postData('https://example.com/answer', { answer: 42 })
+      .then(data => {
+        console.log(data); // JSON data parsed by `data.json()` call
+      });
+</script> -->
+
+
+{% endblock javascripts %}
+  
+
+  </body>
+</html>

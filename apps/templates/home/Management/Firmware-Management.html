@@ -1,0 +1,641 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} dashboard {% endblock title %}
+
+{% block content %}
+
+<div class="page-wrapper">
+    <div class="container-xl">
+        <!-- Page title -->
+        <div class="page-header d-print-none">
+            <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
+                <li class="breadcrumb-item"><a href="#">Management</a></li>
+                <li class="breadcrumb-item"><a href={% url 'FirmwareManagementURL' %}>Firmware Management</a></li>
+
+            </ol>
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <h2 class="page-title">
+                        <!-- Empty page -->
+
+                        <!-- <form method="post" enctype="multipart/form-data"> -->
+                <!-- {% if msg %}
+                   <p style="color:red;">{{ msg|safe }}</p>
+                {% endif %} -->
+                <!-- {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Upload</button>
+              </form>
+
+              <p><a href="{% url 'home' %}">Return to home</a></p> -->
+
+
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container-xl">
+
+            <!-- Content here -->
+            <!--
+            <div class="hr-text">
+                <span>Firmware File Explorer Section</span>
+              </div> -->
+
+            <table id="example" class="display " style="width:100%;">
+                <thead>
+                    <tr>
+                        <th style="width:2%">Download</th>
+                        <th style="width:2%">Delete</th>
+                        <th style="width:2%">Select</th>
+                        <th>State</th>
+                        <!-- <th>File Type</th> -->
+                        <th>Version</th>
+                        <th>File Size</th>
+                        <th>KGS Number/Doc ID</th>
+                        <th>Owner</th>
+                        <th>Created</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for item in Firmware_list %}
+                    {% if perms.home.view_firmwarefile %}
+                    <tr>
+                        <td style="padding-left: 3%;">
+                            <a href="?downloadfile={{item.uuid}}">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-file-download" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <desc>Download more icon variants from https://tabler-icons.io/i/file-download
+                                    </desc>
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z">
+                                    </path>
+                                    <path d="M12 17v-6"></path>
+                                    <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"></path>
+                                </svg>
+                            </a>
+                        </td>
+                        {% else %}
+                        <td style="padding-left: 3%;">
+                            <a href="" style="pointer-events: none; cursor: default;" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <desc>Download more icon variants from https://tabler-icons.io/i/file-off</desc>
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <line x1="3" y1="3" x2="21" y2="21"></line>
+                                    <path d="M7 3h7l5 5v7m0 4a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-14"></path>
+                                 </svg>
+                            </a>
+                        </td>
+                        {% endif %}
+
+                        {% if perms.home.delete_firmwarefile %}
+
+                        <td style="padding-left: 1.5%;">
+                            <a href="?deletefile={{item.uuid}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <desc>Download more icon variants from https://tabler-icons.io/i/trash</desc>
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <line x1="4" y1="7" x2="20" y2="7"></line>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                </svg>
+                            </a>
+                        </td>
+                        {% else %}
+                        <td style="padding-left: 1.5%;">
+                            <a href="" style="pointer-events: none; cursor: default;" >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <desc>Download more icon variants from https://tabler-icons.io/i/trash-off</desc>
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <line x1="3" y1="3" x2="21" y2="21"></line>
+                                    <path d="M4 7h3m4 0h9"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="14" x2="14" y2="17"></line>
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l.077 -.923"></path>
+                                    <line x1="18.384" y1="14.373" x2="19" y2="7"></line>
+                                    <path d="M9 5v-1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                 </svg>
+                            </a>
+                        </td>
+                        {% endif %}
+
+                        {% if perms.home.change_firmwarefile %}
+                            {% if item.state == True %}
+                                <td>
+                                    <label class="form-check form-switch">
+                                        <input id="selectme{{forloop.counter}}" value="{{item.uuid}}" class="form-check-input" style="margin-top: 5px;"
+                                            type="checkbox" name="aaaa">
+                                    </label>
+                                </td>
+                                <td>
+                                    <!-- <span class="status-indicator status-green status-indicator-animated">
+                                        <span class="status-indicator-circle"></span>
+                                        <span class="status-indicator-circle"></span>
+                                        <span class="status-indicator-circle"></span>
+                                    </span> -->
+                                    <h4 style="color:green;margin-top:9px">Active</h4>
+                                </td>
+                                {% else %}
+                                <td>
+                                    <label class="form-check form-switch">
+                                        <input id="selectme{{forloop.counter}}" value="{{item.uuid}}" class="form-check-input" style="margin-top: 5px;"
+                                            type="checkbox">
+                                    </label>
+                                </td>
+                                <td>
+                                    <!-- <span class="status-indicator status-red status-indicator-animated">
+                                        <span class="status-indicator-circle"></span>
+                                        <span class="status-indicator-circle"></span>
+                                        <span class="status-indicator-circle"></span>
+                                    </span> -->
+                                    <h4 style="color:red;margin-top:9px">Active</h4>
+                                </td>
+                            {% endif %}
+                        {% else %}
+                            {% if item.state == True %}
+                            <td>
+                                <label class="form-check form-switch">
+                                    <input id="selectme{{forloop.counter}}" value="" class="form-check-input" style="margin-top: 5px;"
+                                        type="checkbox" checked disabled>
+                                </label>
+                            </td>
+                            <td>
+                                <span class="status-indicator status-green status-indicator-animated">
+                                    <span class="status-indicator-circle"></span>
+                                    <span class="status-indicator-circle"></span>
+                                    <span class="status-indicator-circle"></span>
+                                </span>
+                            </td>
+                            {% else %}
+                            <td>
+                                <label class="form-check form-switch">
+                                    <input id="selectme{{forloop.counter}}" value="" class="form-check-input" style="margin-top: 5px;"
+                                        type="checkbox" disabled>
+                                </label>
+                            </td>
+                            <td>
+                                <span class="status-indicator status-red status-indicator-animated">
+                                    <span class="status-indicator-circle"></span>
+                                    <span class="status-indicator-circle"></span>
+                                    <span class="status-indicator-circle"></span>
+                                </span>
+                            </td>
+                            {% endif %}
+                        {% endif %}
+
+                        <td>{{item.version}}</td>                        
+                        <td>{{item.size}}</td>
+                        <td>{{item.docid}}</td>
+                        <td>{{item.owner}}</td>
+                        <td>{{item.uploaded_at}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <!-- <tfoot>
+                    <tr>
+                        <th style="width:2%">Download</th>
+                        <th style="width:2%">Delete</th>
+                        <th style="width:2%">Select</th>
+                        <th>State</th>
+                        <th>File Type</th>
+                        <th>Version</th>
+                        <th>Size[bytes]</th>
+                        <th>KGS Number/Doc ID</th>
+                        <th>Owner</th>
+                        <th>Created</th>
+
+                    </tr>
+                </tfoot> -->
+            </table>
+
+            <!-- -------------------------------------------- -->
+            <style>
+            #amir {
+                /* background-color: rgb(237, 237, 237);
+                width: inherit;
+                border: 2px dashed rgb(208, 208, 208);
+                padding: 25px;
+                margin-top: 10px;
+                margin-left: auto;
+                margin-right: auto; */
+
+                border: 1px dashed #000;
+                background-color: #eee;
+                padding: 25px;
+                color: #000;
+                position: absolute;
+                bottom: 80px;
+                left: 125px;
+                right: 125px;
+              }
+            </style>
+
+            <!-- <div class="hr-text">بخش آپلود</div> -->
+
+
+            <div id="amir" class="text-center">
+                <h1 class="cursor-pointer">آپلود فایل</h1>
+                <p class="cursor-pointer">داخل کادر کلیک کنید</p>
+                <form action="." method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form}}
+                    <!-- <input type="file" id="upload_input" name="filename" accept="image/png, image/jpeg" hidden> -->
+                    <input type="submit" id="submit_uploaded_file_id" hidden>
+                  </form>
+            </div>
+
+            
+            <!-- -------------------------------------------- -->
+
+            <a href="#" id="my-btn" class="btn" data-bs-toggle="modal" data-bs-target="#select-modal-danger" hidden></a>
+
+                
+
+                <!-- <label for="your_name">Your name: </label> -->
+
+                <!-- <input type="submit" value="OK"> -->
+
+
+
+                <div class="modal modal-blur fade" id="select-modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-status bg-danger"></div>
+                        <div class="modal-body text-center py-4">
+                       
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v2m0 4v.01" /><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" /></svg>
+                        <h3 >آیا مطمئن هستید؟</h3>
+                        <div class="text-muted">آیا میخواهید فریمور دستگاه را عوض کنید؟</div>
+                        </div>
+                        <div class="modal-footer">
+                        <div class="w-100">
+                            <div class="row">
+                            <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal" id="checkbox-modal-cancel-button">
+                                خیر
+                                </a></div>
+                            <div class="col">
+                                <a href="" id="confirm_change_firmware"  class="btn btn-danger w-100" >
+                                بله میخواهم
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+              </div>
+
+
+
+
+
+
+            <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-success" hidden>
+              </a>
+
+
+              <div class="modal modal-blur fade" id="modal-success" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-status bg-success"></div>
+                    <div class="modal-body text-center py-4">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2l4 -4" /></svg>
+                      <h3>آپلود با موفقیت انجام شد</h3>
+                      <div class="text-muted">سیستم برای اعمال تغییرات نیاز به بارگذاری مجدد دارد</div>
+                      <div class="text-muted">آیا با آن موافقت می‌کنید؟</div>
+                    </div>
+                    <div class="modal-footer">
+                      <div class="w-100">
+                        <div class="row">
+                          <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                              خیر
+                            </a></div>
+                          <div class="col"><a href="#"  id="confirm-apply-last-uploaded-firmware" class="btn btn-success w-100">
+                              بله
+                            </a></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+
+
+              <style>
+                  .alert {
+                    display: none;
+                    position: fixed;
+                    width: 30%;
+                    bottom:0;
+                    right:0;
+                  }
+              </style>
+              <div class="alert alert-danger" role="alert" id="alert">
+                    <div class="d-flex">
+                      <div>
+                        <!-- Download SVG icon from http://tabler-icons.io/i/alert-circle -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/alert-circle</desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                      </div>
+                      <div id="alert-danger-message">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="alert alert-success" role="alert">
+                    <div class="d-flex">
+                      <div>
+                        <!-- Download SVG icon from http://tabler-icons.io/i/check -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/check</desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12l5 5l10 -10"></path></svg>
+                      </div>
+                      <div id="alert-success-message">
+                      </div>
+                    </div>
+                  </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<!-- initialize Datatable -->
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            "scrollY": "280px",
+            "scrollCollapse": true,
+            "paging": false,
+            "searching": false
+        });
+        //  hide datatable info : example: `Showing 1 to 10 of 57 entries`
+        $('div.dataTables_info').hide();
+        
+        // trigger modal by clicking on specific row
+        // $('#example tbody').on('click', 'tr td input', function () {
+        //     // var data = table.row(this).data();
+        //     var data = table.row($(this).parents('tr')).data();
+
+        //     document.getElementById("my-btn").click();
+
+        //     console.log(data);
+        // });
+    });
+</script>
+
+
+
+
+
+
+
+<!-- <script>
+    $("td > a").click(function(event){
+        event.preventDefault();
+        $('#deletefile-select-modal-danger').modal('show');
+        const href_val= $(this).attr('href');
+        document.getElementById('deletefile-modal-ok-button').setAttribute('href', href_val);
+        console.log(document.getElementById('deletefile-modal-ok-button'))
+    });
+    $('#deletefile-modal-ok-button').click(function(){
+        document.getElementById('deletefile-modal-ok-button').click();
+    });
+</script> -->
+
+<!-- after successfully upload files, show modal to get user restart system permission -->
+<script>
+    $(document).ready(function () {
+        if('{{msg}}' == 'successfully file uploaded'){
+            $('#modal-success').modal('show');
+        }
+        else if('{{msg}}' == 'you have no permission to upload file'){
+            $('#alert-danger-message').append(`<h4 class="alert-title">permission denied</h4>
+                                              <div class="text-muted">"You do not have permission to upload the file. file upload failed"</div>`);
+            $('.alert-danger').show();
+            $('.alert-danger').fadeOut(7000);
+        }
+        else if('{{msg}}' == 'successfully file deleted'){
+            $('#alert-success-message').append(`<h4 class="alert-title">file deleted</h4>
+                                        <div class="text-muted">file deleted successfully</div>`);
+            $('.alert-success').show();
+            $('.alert-success').fadeOut(7000);
+        }
+        else if('{{msg}}' == 'you have no permission to delete file'){
+            $('#alert-danger-message').append(`<h4 class="alert-title">permission denied</h4>
+                                              <div class="text-muted">You do not have permission to delete the file. file delete failed</div>`);
+            $('.alert-danger').show();
+            $('.alert-danger').fadeOut(7000);
+        }
+        else if('{{msg}}' == 'you have no permission to download file'){
+            $('#alert-danger-message').append(`<h4 class="alert-title">permission denied</h4>
+                                              <div class="text-muted">You do not have permission to download the file. file download failed</div>`);
+            $('.alert-danger').show();
+            $('.alert-danger').fadeOut(7000);
+        }
+        else if('{{msg}}' == 'successfully applied last uploaded firmware'){
+            $('#alert-success-message').append(`<h4 class="alert-title">successfully applied last uploaded firmware</h4>
+                                        <div class="text-muted">successfully applied last uploaded firmware</div>`);
+            $('.alert-success').show();
+            $('.alert-success').fadeOut(7000);
+        }
+        else if('{{msg}}' == 'you have no permission to apply last uploaded firmware'){
+            $('#alert-danger-message').append(`<h4 class="alert-title">permission denied</h4>
+                                              <div class="text-muted">You do not have permission to apply last uploaded firmware. apply last uploaded firmware failed</div>`);
+            $('.alert-danger').show();
+            $('.alert-danger').fadeOut(7000);
+        }
+        else if ('{{msg}}' == 'please select another firmware before delete this file'){
+            $('#alert-danger-message').append(`<h4 class="alert-title">please select another firmware First</h4>
+                                              <div class="text-muted">please select another firmware before delete this file</div>`);
+            $('.alert-danger').show();
+            $('.alert-danger').fadeOut(7000);
+        }
+
+    });
+</script>
+
+
+
+
+<script>
+    //[+]: display select file window by click on h1 and p element on Upload section
+    $('#amir').on('click', 'h1, p', function () {
+    $('#upload_input').click();
+    });
+    //[+]: submit/upload file automatically after user select file
+    const selectElement = document.querySelector('#upload_input');
+    selectElement.addEventListener('change', (event) => {
+    const result = document.querySelector('#submit_uploaded_file_id');
+    result.click();
+    });
+
+
+</script>
+
+{% if perms.home.change_firmwarefile %}
+
+<script>
+    $(document).ready(function () {
+        console.log($('table tbody tr td:nth-child(3) input').val());
+        document.getElementById("confirm-apply-last-uploaded-firmware").setAttribute('href', '?apply-last-uploaded-firmware=' + $('table tbody tr td:nth-child(3) input').val());
+    });
+</script>
+
+<!-- [+]: after select each checkbox, other checkbox must be deselected -->
+<!-- [+]: in popup modal after select one of select button, if user press cancel button, selected checkbox must be deselected and 
+            previous selected checkbox must be selected -->
+
+<script>
+    var last_checked_checkbox_id = ''
+    var pre_checked_checkbox_id = ''
+
+    $(':checkbox').click(function () {
+        var flag = true
+        var last_this = this;
+        if (this.checked) {
+
+        this.checked = true;
+        last_checked_checkbox_id = $(this).attr('id');
+            $(':checkbox').each(function () {
+                if(this.checked == true & flag == true & last_this != this){ // if selected checkbox is not the current checkbox, if statement will be true
+                    flag = false
+                    pre_checked_checkbox_id = $(this).attr('id');
+                    $(this).prop('checked', false);
+                    $(this).parent().parent().removeClass('selected');
+                   pre_checked_checkbox_id = $(this).attr('id');
+                   console.log(pre_checked_checkbox_id + '  preee');
+                   flag = false
+                }
+                this.checked = false;
+
+            });
+        }
+        this.checked = true;
+        last_checked_checkbox_id = $(this).attr('id');
+        console.log(last_checked_checkbox_id + '   lasteee')
+        // trigger modal
+        document.getElementById("my-btn").click();
+        last_checked_checkbox_value = $(this).val();
+
+        $('#confirm_change_firmware').attr('href', '?selected_firmwareuuid=' + last_checked_checkbox_value);
+    });
+
+    $('#checkbox-modal-cancel-button').click(function(){
+        if(last_checked_checkbox_id){
+            console.log('in cencel button script')
+            // order of this two lines is IMPORTANT
+            document.getElementById(last_checked_checkbox_id.toString()).checked = false;
+            document.getElementById(pre_checked_checkbox_id.toString()).checked = true;
+            if(pre_checked_checkbox_id == last_checked_checkbox_id){
+                document.getElementById(last_checked_checkbox_id.toString()).checked = true;
+            }
+        }
+    });
+</script>
+
+
+<!-- [+]: if user click outside of select modal, deselect automatically last selected checkbox -->
+<script>
+    $('#select-modal-danger').on('hide.bs.modal', function (e) {
+        console.log('in hide modal')
+        if (pre_checked_checkbox_id == last_checked_checkbox_id){
+            document.getElementById(last_checked_checkbox_id.toString()).checked = true;
+        }
+        else if(last_checked_checkbox_id){
+            document.getElementById(pre_checked_checkbox_id.toString()).checked = true;
+            document.getElementById(last_checked_checkbox_id.toString()).checked = false;
+        }
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+
+        console.log($('[name=aaaa]'))
+        const temp = $('[name=aaaa]');
+        temp.attr('checked', true);
+        pre_checked_checkbox_id = temp.attr('id');
+        console.log(pre_checked_checkbox_id + '  preaaaa');
+    });
+</script>
+
+{% endif %}
+
+<!-- <script type="text/javascript">
+
+    function uploadProgressHandler(event) {
+        $("#loaded_n_total").html("Uploaded " + event.loaded + " bytes of " + event.total);
+        var percent = (event.loaded / event.total) * 100;
+        var progress = Math.round(percent);
+        $("#uploadProgressBar").html(progress + " percent na ang progress");
+        $("#uploadProgressBar").css("width", progress + "%");
+        $("#status").html(progress + "% uploaded... please wait");
+    }
+
+    function loadHandler(event) {
+        $("#status").html(event.target.responseText);
+        $("#uploadProgressBar").css("width", "0%");
+    }
+
+    function errorHandler(event) {
+        $("#status").html("Upload Failed");
+    }
+
+    function abortHandler(event) {
+        $("#status").html("Upload Aborted");
+    }
+    const input = document.querySelector('#upload_input');
+    input.addEventListener('change', function (event) {
+        event.preventDefault();
+        var file = $("#upload_input")[0].files[0];
+        var formData = new FormData();
+        formData.append("file1", file);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        $.ajax({
+            url: '.',
+            method: 'POST',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress",
+                    uploadProgressHandler,
+                    false
+                );
+                xhr.addEventListener("load", loadHandler, false);
+                xhr.addEventListener("error", errorHandler, false);
+                xhr.addEventListener("abort", abortHandler, false);
+
+                return xhr;
+            }
+        });
+    });
+</script> -->
+
+
+
+
+{% endblock javascripts %}
